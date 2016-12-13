@@ -4,11 +4,8 @@ import com.cloudage.membercenter.entity.User;
 
 public interface IUserService {
 	User save(User user);
-
-	void login(String account, String passwordHash);
-	User getCurrentUser();
-	boolean changePassword(String newPasswordHash);
-	
-	void logout();
-	
+	User findByAccount(String account);
+	User findByEmail(String email);
+	User findById(Integer id);
+		
 }

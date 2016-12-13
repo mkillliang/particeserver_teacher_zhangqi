@@ -17,22 +17,30 @@ public class User extends BaseEntity{
 	public String getAccount() {
 		return account;
 	}
+	
+	@Column(nullable=false)
 	public String getPasswordHash() {
 		return passwordHash;
 	}
+	
+	@Column(unique=true)
 	public String getName() {
 		return name;
 	}
+	
+	@Column(nullable=true)
 	public String getAvatar() {
 		return avatar;
 	}
 	
 	
 	//----------------
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
+	@Column(nullable=false,unique=true)
 	public String getEmail() {
 		return email;
 	}

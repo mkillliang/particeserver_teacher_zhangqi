@@ -17,33 +17,48 @@ public class DefaultUserService implements IUserService {
 
 	@Autowired
 	IUserRepository userRepo;
-		
+
+	@Override
 	public User save(User user){
 		return userRepo.save(user);
 	}
-
+	
 	@Override
-	public void login(String account, String passwordHash) {
-		
-
+	public User findByAccount(String account){
+		return userRepo.findUserByAccount(account);
+	}
+	
+	@Override
+	public User findByEmail(String email) {
+		return userRepo.findUserByEmail(email);
 	}
 
 	@Override
-	public User getCurrentUser() {
-		// TODO Auto-generated method stub
-		return null;
+	public User findById(Integer id) {
+		return userRepo.findOne(id);
 	}
 
-	@Override
-	public boolean changePassword(String newPasswordHash) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+//	@Override
+//	public User save(User user){
+//		return userRepo.save(user);
+//	}
+//	
+//	@Override
+//	public User findByAccount(String account){
+//		return userRepo.findUserByAccount(account);
+//	}
+//	
+//	@Override
+//	public User findByEmail(String email) {
+//		return userRepo.findUserByEmail(email);
+//	}
+//
+//	@Override
+//	public User findById(Integer id) {
+//		return userRepo.findOne(id);
+//	}
 
-	@Override
-	public void logout() {
-		// TODO Auto-generated method stub
-
-	}
+	
+	
 
 }
