@@ -20,11 +20,19 @@ public class DefaultCommentService implements ICommentService {
 	@Autowired
 	ICommentRespository commentRepo;
 	
-	public Page<Comment> findCommentOfArticle(int articleId,int page){
+	@Override
+	public Page<Comment> findCommentsOfArticle(int articleId,int page){
 		Sort sort = new Sort(Direction.DESC,"createDate");
 		PageRequest pageRequest = new PageRequest(page,10,sort);
 		
 		return commentRepo.findAllOfArticleId(articleId, pageRequest);
 		
 	}
+	
+	@Override
+	public Comment save(Comment comment) {
+		return commentRepo.save(comment);
+	}
+	
+	
 }

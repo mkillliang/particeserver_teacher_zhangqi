@@ -14,4 +14,5 @@ public interface IArticleService {
 	List<Article> findAllByAuthorId(Integer userId);
 	Article save(Article article);
 	Page<Article> getFeeds(int page);
+	Article findOne(int id);
 }

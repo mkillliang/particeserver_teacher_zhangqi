@@ -21,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
 
 import com.cloudage.membercenter.entity.Article;
+import com.cloudage.membercenter.entity.Comment;
 import com.cloudage.membercenter.entity.User;
 import com.cloudage.membercenter.service.IArticleService;
+import com.cloudage.membercenter.service.ICommentService;
 import com.cloudage.membercenter.service.IUserService;
 
 
@@ -34,6 +36,9 @@ public class APIController {
 
 	@Autowired
 	IArticleService articleService;
+	
+	@Autowired
+	ICommentService commentService;
 
 
 	@RequestMapping(value = "/hello", method=RequestMethod.GET)
@@ -177,6 +182,36 @@ public class APIController {
 	@RequestMapping("/feeds")
 	public Page<Article> getFeeds(){
 		return getFeeds(0);
+	}
+	
+	//--------------
+	//发表评论分页网页
+	@RequestMapping(value="/article/{article_id}/comments/{page}")
+	public Page<Comment> setCommentsOfArticle(
+			@PathVariable int article_id,
+			@PathVariable int page){
+		return commentService.findCommentsOfArticle(article_id, page);
+	}
+	
+	@RequestMapping(value="/article/{article_id}/comments")
+	public Page<Comment> setCommentsOfArticle(
+			@PathVariable int article_id){
+		return commentService.findCommentsOfArticle(article_id, 0);
+	}
+	
+	//发表评论----
+	@RequestMapping(value="/article/{article_id}/comments",method = RequestMethod.POST)
+	public Comment postComment(
+			@PathVariable int article_id,
+			@RequestParam String text,
+			HttpServletRequest request){
+		User me = getCurrentUser(request);
+		Article article = articleService.findOne(article_id);
+		Comment comment = new Comment();
+		comment.setAuthor(me);          //评论人
+		comment.setArticle(article);    //评论文章
+		comment.setText(text);          //评论内容
+		return commentService.save(comment);
 	}
 
 }

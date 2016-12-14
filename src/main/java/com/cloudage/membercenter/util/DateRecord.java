@@ -7,10 +7,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 @MappedSuperclass
-public class DateRecord{
+public class DateRecord extends BaseEntity{
 	Date createDate;
 	Date editDate;
 	
@@ -34,6 +35,11 @@ public class DateRecord{
 		editDate = new Date();
 	}
 	
+	@PrePersist
+	void onPrePersist(){
+		editDate = new Date();
+		createDate = new Date();
+	}
 	
 
 }
